@@ -4,12 +4,18 @@ provider "aws" {
 
 resource "aws_instance" "abhishek" {
   instance_type = "t2.micro"
-  ami = "ami-053b0d53c279acc90" # change this
-  subnet_id = "subnet-019ea91ed9b5252e7" # change this
+  ami = "ami-0953476d60561c955" # change this
+  subnet_id = "subnet-0d9f444378a9b2e69" # change this
+  tags = {
+        Name="amarbvn-test-ec2-instance"
+    }
 }
 
 resource "aws_s3_bucket" "s3_bucket" {
-  bucket = "abhishek-s3-demo-xyz" # change this
+  bucket = "amarbvn-remote-backend-s3" # change this
+  tags = {
+        Name = "remote-backend-s3"
+    }
 }
 
 resource "aws_dynamodb_table" "terraform_lock" {
@@ -19,6 +25,6 @@ resource "aws_dynamodb_table" "terraform_lock" {
 
   attribute {
     name = "LockID"
-    type = "S"
+    type = "S"  # String
   }
 }
