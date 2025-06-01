@@ -104,8 +104,8 @@ provisioner "file" {
 ## Remote Exec Provisioner to run a command on EC2 instance
 provisioner "remote-exec" {
   inline = [
-    echo "Hello from remote EC2 instance"
-    "sudo apt update -y"
+    "echo 'Hello from remote EC2 instance'",
+    "sudo apt update -y",
     "sudo apt-get install python3-pip -y",
     
     "cd /home/ubuntu",
