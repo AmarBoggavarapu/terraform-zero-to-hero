@@ -92,7 +92,7 @@ connection {
   type = "ssh"
   user = "ubuntu"
   private_key = file("~/.ssh/id_rsa")
-  host = self
+  host = self.public_ip
 }
 
 ## File provisioner to a copy a file to remote EC2 instance.
