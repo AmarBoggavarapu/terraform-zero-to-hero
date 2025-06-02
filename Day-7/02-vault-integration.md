@@ -101,7 +101,7 @@ Root Token: hvs.XXXXXXXXXXXX
 ````
 Once logged-in, you will get root access to vault.
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Secret Engines are like different types of engines we can create in Hashi Corp Vault.
 
 For storing Kubernetes secret, we can use Kubernetes secret engine.
@@ -110,7 +110,7 @@ For storing regular key-value pair, we can use "kv" secret engine.
 
 By default, no secrets engine is enabled in Hashi Corp Vault.
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 **## Enabling new secrets engine**
 ````
