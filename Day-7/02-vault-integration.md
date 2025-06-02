@@ -22,6 +22,7 @@ To install Vault on the EC2 instance, you can use the following steps:
 ```
 sudo apt update && sudo apt install gpg
 ```
+Vault by default is not available as a package in our ubuntu machine. So, we are adding Hashi Corp Package manager to ubuntu. Whenever, there is no package available we can get those from the provider (https://apt.releases.hashicorp.com) who provides these.
 
 **Download the signing key to a new keyring**
 
@@ -51,6 +52,12 @@ sudo apt update
 sudo apt install vault
 ```
 
+**Check the version of Vault**
+
+```
+vault --version
+```
+
 ## Start Vault.
 
 To start Vault, you can use the following command:
@@ -58,6 +65,71 @@ To start Vault, you can use the following command:
 ```
 vault server -dev -dev-listen-address="0.0.0.0:8200"
 ```
+
+Vault comes in 2-modes, Development mode (Can be used for POCs, learning, demo, practice) and Production mode (For Organizational tasks).
+
+```
+Keep above running vault as-is.
+
+Open a new terminal and run all the below commands in the new terminal.
+
+$ export VAULT_ADDR='http://0.0.0.0:8200'
+```
+
+## To access the vault GUI, we need to add "Inbound role" for the security group associated with our EC2 instance.
+EC2 --> Instances --> i-xxxxxxxx --> Security --> Security groups (sg-xxxxxx) --> Inbound rules --> Edit Inbound rules.
+
+Type:        Custom TCP
+Protocol:    TCP
+Port range:  8200
+Source:      0.0.0.0/0
+
+Once above Inbound role is added to security group, we can access the EC2 instance from GUI (Browser)
+http://54.89.99.162:8200/   ## Public IP of EC2 instance with port 8200
+
+## Sign-in to vault
+There are multiple ways to sign-in to vault, for this demo - we will use the mode of Root Token.
+Method: Token
+Token: Root token (we can see this from 1st terminal which we kept aside after starting vault in dev mode - sample as shown below).
+
+````
+The unseal key and root token are displayed below in case you want to
+seal/unseal the Vault or re-authenticate.
+
+Unseal Key: HOoLh/XXXXXXXX
+Root Token: hvs.XXXXXXXXXXXX
+````
+Once logged-in, you will get root access to vault.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Secret Engines are like different types of engines we can create in Hashi Corp Vault.
+
+For storing Kubernetes secret, we can use Kubernetes secret engine.
+
+For storing regular key-value pair, we can use "kv" secret engine.
+
+By default, no secrets engine is enabled in Hashi Corp Vault.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+**## Enabling new secrets engine**
+````
+Secrets Engines --> Enable new engine --> kv (for this demo, we will use key-value pair, kv secret engine) --> path (give a unique and meaningful name, This is like a mount to store the credentials) --> Example path: kv --> Enable Engine.
+
+````
+Hashicorp vault is popular, as it does encryption once we enter in vault secret engine. At the path or at instance level - it will store only the encrypted information. Decrypted information is available only in the vault.
+
+**## Creating secret**
+kv (Name of path created in previous step) --> create secret --> path for this secret (give a unique and meaningful name) --> Example path for this secret: kv-path --> secret data --> Key and Value --> Add --> Save
+
+Above secret is created with root user. So only root will have access.
+
+Now to access this secret via ansible or terraform --> We need to create a role inside your vault.
+
+Similar to IAM role in AWS --> We have Access
+Similar to IAM policy in AWS --> We have Policies
+
+We can't create roles via GUI, so we will run below set of commands in the 2nd terminal which we have started earlier.
 
 ## Configure Terraform to read the secret from Vault.
 
@@ -105,6 +177,8 @@ capabilities = ["create", "read", "update", "list"]
 }
 EOF
 ```
+Above step will create a new policy named "terraform".
+**Success! Uploaded policy: terraform**
 
 Now you'll need to create an AppRole with appropriate policies and configure its authentication settings. Here are the steps to create an AppRole:
 
