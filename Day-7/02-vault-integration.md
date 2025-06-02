@@ -199,6 +199,10 @@ vault write auth/approle/role/terraform \
 
 After creating the AppRole, you need to generate a Role ID and Secret ID pair. The Role ID is a static identifier, while the Secret ID is a dynamic credential.
 
+Similar to Access Key & Secret Key in AWS --> We have Role ID and Secret ID in Hashi Corp Vault.
+
+Role ID and Secret ID are very sensitive and not supposed to share with anyone.
+
 **a. Generate Role ID**:
 
 You can retrieve the Role ID using the Vault CLI:
