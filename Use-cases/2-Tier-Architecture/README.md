@@ -1,6 +1,7 @@
 ***Here is a complete list of all AWS resources being created by Terraform plan:***
 
 **VPC & Networking**
+
 ✅ aws_vpc.myvpc — Virtual Private Cloud
 
 ✅ aws_subnet.mysubnet1 — Subnet #1
@@ -17,20 +18,24 @@
 
 
 **Compute (EC2)**
+
 ✅ aws_instance.myec2-instance1 — EC2 Instance #1
 
 ✅ aws_instance.myec2-instance2 — EC2 Instance #2
 
 
 **Storage**
+
 ✅ aws_s3_bucket.mys3 — S3 Bucket
 
 
 **Security**
+
 ✅ aws_security_group.mysg — Security Group
 
 
 **Load Balancer**
+
 ✅ aws_lb.myalb — Application Load Balancer
 
 ✅ aws_lb_listener.mylistener — ALB Listener
